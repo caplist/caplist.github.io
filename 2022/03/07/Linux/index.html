@@ -17,7 +17,7 @@
 <meta property="og:description" content="Everything is a file ,in linux!在Linux下，所有的一切都是一个文件，包括设备文件">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2022-03-07T03:56:39.000Z">
-<meta property="article:modified_time" content="2022-03-07T11:49:27.181Z">
+<meta property="article:modified_time" content="2022-03-08T08:33:43.287Z">
 <meta property="article:tag" content="Linux">
 <meta name="twitter:card" content="summary">
   
@@ -95,7 +95,7 @@
             
 		</nav>
 		<nav>
-			总文章数  8
+			总文章数  9
 		</nav>
 		<nav class="header-nav">
 			<div class="social">
@@ -199,7 +199,7 @@
         
        <i class="icon-statistics"></i>
         <span class="post-meta-item-text">  字数统计: </span>
-        <span class="post-count">952字</span>
+        <span class="post-count">944字</span>
       </span>
     </span>
 
@@ -227,26 +227,22 @@
 <h3 id="文档操作"><a href="#文档操作" class="headerlink" title="文档操作"></a>文档操作</h3><p>1.打开文件 open<br>NAME<br>        open, openat, creat - open and possibly create a file<br>        用来打开或者创建一个文件<br>SYNOPSIS   (必要的头文件)</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/types.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/stat.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;fcntl.h&gt;</span></span></span><br></pre></td></tr></table></figure>
 
-<p>2.操作文件 read/write/lseek<br>    2.1 read<br>NAME<br>       read - read from a file descriptor<br>        从文件描述符去读取内容<br>SYNOPSIS<br>       #include &lt;unistd.h&gt;</p>
-<p>   ssize_t read(int fd, void *buf, size_t count);<br>    int fd：文件描述符<br>    void *buf：用来保存从文件当中读取到的内容  –&gt;定义成数组<br>    size_t count:你想要从文件当中读取到多少字节的内容</p>
-<p>返回值：成功的话返回你实际上读到了多少字节<br>    如果返回一个0表示？表示这个文件已经读完了，没有内容可读了，如果失败则返回-1；<br>    char buf[10]={0};      </p>
-<pre><code>.....
+<p>2.操作文件 read/write/lseek<br>        2.1 read<br>                    NAME<br>                    read - read from a file descriptor<br>                    从文件描述符去读取内容<br>                    SYNOPSIS<br>                    #include &lt;unistd.h&gt;</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">ssize_t</span> <span class="title">read</span><span class="params">(<span class="keyword">int</span> fd, <span class="keyword">void</span> *buf, <span class="keyword">size_t</span> count)</span></span>;</span><br></pre></td></tr></table></figure>
 
-printf(&quot;%s\n&quot;,buf)
-</code></pre>
+<p>​                    int fd：文件描述符<br>​                    void *buf：用来保存从文件当中读取到的内容  –&gt;定义成数组<br>​                    size_t count:你想要从文件当中读取到多少字节的内容<br>​                    返回值：成功的话返回你实际上读到了多少字节<br>​                    如果返回一个0表示？表示这个文件已经读完了，没有内容可读了，如果失败则返回-1；     </p>
 <p>练习：打开并读取1.txt里面的内容，保存在buf，输出</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;sys/types.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;sys/stat.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;fcntl.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">char</span> buf[<span class="number">10</span>]=&#123;<span class="number">0</span>&#125;;</span><br><span class="line">    <span class="keyword">int</span> fd,ds;</span><br><span class="line">    fd = open(<span class="string">&quot;./1.txt&quot;</span>,O_RDWR);</span><br><span class="line">    <span class="keyword">if</span>(<span class="number">-1</span>==fd)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;Open failed!\n&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    ds = read(fd,buf,<span class="number">10</span>);</span><br><span class="line">    <span class="keyword">if</span>(<span class="number">-1</span>==ds)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;read failed!\n&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%s\n&quot;</span>,buf);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 
 
 <hr>
-<p>​    2.2write </p>
-<p>NAME<br>       write - write to a file descriptor<br>            往文件描述符内写入内容<br>SYNOPSIS<br>       #include &lt;unistd.h&gt;</p>
-<p>   ssize_t write(int fd, const void *buf, size_t count);<br>        int fd：文件描述符<br>         const void *buf:保存你将要写入到文件的内容<br>          size_t count：你想要写入多少个字节的内容</p>
-<pre><code>返回值： 
-    成功的话，返回实际上写入的字节数
-    失败的返回-1；
-</code></pre>
+<p>​        2.2write </p>
+<p>​                    NAME<br>​                    write - write to a file descriptor<br>​                    往文件描述符内写入内容<br>​                    SYNOPSIS<br>​                    #include &lt;unistd.h&gt;</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">ssize_t</span> <span class="title">write</span><span class="params">(<span class="keyword">int</span> fd, <span class="keyword">const</span> <span class="keyword">void</span> *buf, <span class="keyword">size_t</span> count)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<p>​                    int fd：文件描述符<br>​                    const void *buf:保存你将要写入到文件的内容<br>​                    size_t count：你想要写入多少个字节的内容<br>​          </p>
+<p>​                    返回值：<br>​                    成功的话，返回实际上写入的字节数；失败的返回-1。</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">char</span> *str = <span class="string">&quot;i like zhoujielun!!&quot;</span>;</span><br></pre></td></tr></table></figure>
 
 <p>练习2：将上述的字符串写入到2.txt中</p>
@@ -254,7 +250,7 @@ printf(&quot;%s\n&quot;,buf)
 
 
 
-<p>2.3 lseek<br>NAME<br>       lseek - reposition read/write file offset<br>            用来移动你的光标，也就是文件偏移量<br>SYNOPSIS</p>
+<p>​        2.3 lseek<br>​                    NAME<br>​                    lseek - reposition read/write file offset<br>​                    用来移动你的光标，也就是文件偏移量<br>​                    SYNOPSIS</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/types.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></span><br></pre></td></tr></table></figure>
 
 <pre><code> off_t lseek(int fd, off_t offset, int whence);
@@ -273,7 +269,7 @@ printf(&quot;%s\n&quot;,buf)
 lseek(fd,0,SEEK_SET);文件的开头
 lseek(fd,0,SEEK_END);文件的末尾
 </code></pre>
-<p>返回值： 失败返回-1；<br>        成功返回新光标到文件开头的字节数</p>
+<p>​                        返回值： 失败返回-1；<br>​                        成功返回新光标到文件开头的字节数</p>
 <p>练习3：写代码测试今天笔记的大小</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;sys/types.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;sys/stat.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;fcntl.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> fd,ds;</span><br><span class="line">    fd = open(<span class="string">&quot;./1.txt&quot;</span>,O_RDWR);</span><br><span class="line">    <span class="keyword">if</span>(<span class="number">-1</span>==fd)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;Open failed!\n&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    ds = lseek(fd,<span class="number">0</span>,SEEK_END);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%d&quot;</span>,ds);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
@@ -327,7 +323,7 @@ lseek(fd,0,SEEK_END);文件的末尾
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/Linux//" class="article-tag-list-link color1">Linux</a>
+        			<a href="/categories/教程//" class="article-tag-list-link color3">教程</a>
         		</li>
       		
 		</ul>
@@ -395,6 +391,15 @@ lseek(fd,0,SEEK_END);文件的末尾
 
   
 <nav id="article-nav">
+  
+    <a href="/2022/03/08/%E7%82%B9%E4%BA%AE%E5%B1%8F%E5%B9%95/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          点亮屏幕
+        
+      </div>
+    </a>
   
   
     <a href="/2021/10/01/%E7%9F%AD%E8%AF%AD%E7%A7%AF%E7%B4%AF/" id="article-nav-older" class="article-nav-link-wrap">
@@ -540,11 +545,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">心态</a>
+                <a href="javascript:void(0)" class="js-tag color3">诗句</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">诗句</a>
+                <a href="javascript:void(0)" class="js-tag color3">心态</a>
               </li>
              
               <li class="article-tag-list-item">
