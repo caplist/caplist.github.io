@@ -9,13 +9,15 @@
   <link rel="dns-prefetch" href="http://caplist.xyz">
   <title>点亮屏幕 | Caplist</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="article">
+  <meta name="description" content="开发板    用来跑程序的 1.编译的两种方式：    1.普通编译：在linux系统上编译运行的一种        gcc xxx.c -o xxx">
+<meta property="og:type" content="article">
 <meta property="og:title" content="点亮屏幕">
 <meta property="og:url" content="http://caplist.xyz/2022/03/08/%E7%82%B9%E4%BA%AE%E5%B1%8F%E5%B9%95/index.html">
 <meta property="og:site_name" content="Caplist">
+<meta property="og:description" content="开发板    用来跑程序的 1.编译的两种方式：    1.普通编译：在linux系统上编译运行的一种        gcc xxx.c -o xxx">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2022-03-08T08:23:18.000Z">
-<meta property="article:modified_time" content="2022-03-08T08:24:16.697Z">
+<meta property="article:modified_time" content="2022-03-10T01:30:11.885Z">
 <meta property="article:tag" content="Linux">
 <meta name="twitter:card" content="summary">
   
@@ -99,7 +101,7 @@
             
 		</nav>
 		<nav>
-			总文章数  9
+			总文章数  10
 		</nav>
 		<nav class="header-nav">
 			<div class="social">
@@ -203,7 +205,7 @@
         
        <i class="icon-statistics"></i>
         <span class="post-meta-item-text">  字数统计: </span>
-        <span class="post-count">0字</span>
+        <span class="post-count">494字</span>
       </span>
     </span>
 
@@ -213,7 +215,7 @@
          
         <i class="icon-book icon"></i>
         <span class="post-meta-item-text"> 阅读时长≈</span>
-        <span class="post-count">1分</span>
+        <span class="post-count">2分</span>
       </span>
     </span>
 </div>
@@ -225,7 +227,75 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        
+        <p>开发板<br>    用来跑程序的</p>
+<p>1.编译的两种方式：<br>    1.普通编译：在linux系统上编译运行的一种<br>        gcc xxx.c -o xxx </p>
+<span id="more"></span>
+
+<pre><code>2.交叉编译：在linux系统上进行编译，在开发板上运行程序
+    arm-linux-gcc xxx.c -o xxx 
+    
+    只要是开发板上运行，就要交叉编译
+</code></pre>
+<ol start="2">
+<li>环境<pre><code> 驱动 ch340
+
+ 串口软件
+     SecureCRT
+ 步骤：
+   文件--快速连接
+   协议：serial
+   端口：设备管理器端口
+   波特率：115200
+   流控： RTS/CTS 勾选去掉
+   ctrl+c 
+</code></pre>
+ 创建自己小组的目录  <pre><code> mkdir xxx  
+ cd xxx  
+ 
+</code></pre>
+</li>
+</ol>
+<p>3.下载程序到开发板的步骤：<br>    交叉编译：</p>
+<pre><code>arm-linux-gcc 1.c -o 1
+    
+下载可执行的程序到开发板
+    切换自己的目录
+    下载的命令：
+        rx 你要下载的文件名
+        点击传输
+        发送xModern
+
+给权限：
+    chmod 777 xxx 
+
+运行：
+    ./xxx 
+</code></pre>
+<p>练习1：求100-999之间的水仙花数并打印<br>    格式： abc==a<em>a</em>a+b<em>b</em>b+c<em>c</em>c </p>
+<p>4.LCD屏幕<br>    4.1 打开屏幕   “/dev/fb0”</p>
+<pre><code>显示屏的原理：
+    开发板的显示屏是一块800*480，同时也是一块触摸屏 
+    如何显示颜色？
+    
+800*480个像素点组成
+像素点：就是可以组成颜色的点  4个字节
+4.2 像素点的组成    4个字节
+    A(透明度)   R(红色)    G(绿色)    B(蓝色)
+      0           1         0          0      ---red 
+      0          ff         0          0      --- 0xFF0000 最红  将颜色进行量化
+
+结论：一个像素点： ARGB  四个字节 unsigned int color = 0xFF0000;
+
+4.3 写像素点   write
+
+4.4 关闭屏幕  close 
+</code></pre>
+<p>练习2：将屏幕染成蓝色<br>    网上有所有颜色的十六进制的表示法    </p>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;sys/types.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;sys/stat.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;fcntl.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>{</span><br><span class="line">    <span class="keyword">int</span> i,k,j,fd,ds;</span><br><span class="line">    <span class="comment">// char buf[4]={0xff,0x00,0x00,0x00};</span></span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">int</span> color=<span class="number">0xff</span>;</span><br><span class="line">    fd=open(<span class="string">"/dev/fb0"</span>,O_RDWR);</span><br><span class="line">    <span class="keyword">if</span>(<span class="number">-1</span>==fd)</span><br><span class="line">    {</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"Open failed!\n"</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    }</span><br><span class="line">    <span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;<span class="number">480</span>;i++)</span><br><span class="line">    {</span><br><span class="line">        <span class="keyword">for</span>(j=<span class="number">0</span>;j&lt;<span class="number">800</span>;j++)</span><br><span class="line">        {</span><br><span class="line">            ds = write(fd,&amp;color,<span class="number">4</span>);<span class="comment">//注意&amp;</span></span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"Sucessed!!\n"</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>​<br>​<br>​<br>​<br>​<br>​<br>​<br>​<br>​    </p>
+<p>​    </p>
+
       
 
       
@@ -339,6 +409,15 @@
 
   
 <nav id="article-nav">
+  
+    <a href="/2022/03/10/%E6%98%A0%E5%B0%84/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          映射
+        
+      </div>
+    </a>
   
   
     <a href="/2022/03/07/Linux/" id="article-nav-older" class="article-nav-link-wrap">

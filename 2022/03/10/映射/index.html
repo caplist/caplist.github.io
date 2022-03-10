@@ -7,13 +7,18 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://caplist.xyz">
-  <title>Archives: 2022/3 | Caplist</title>
+  <title>映射 | Caplist</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Caplist">
-<meta property="og:url" content="http://caplist.xyz/archives/2022/03/index.html">
+  <meta name="description" content="killall iot  杀死原有屏幕的程序 映射 Linux帧缓冲原理    在Linux驱动下面，有一块缓冲区(显存)，保存了每一个像素点的颜色值，缓冲区有多大？ 1800*480*4">
+<meta property="og:type" content="article">
+<meta property="og:title" content="映射">
+<meta property="og:url" content="http://caplist.xyz/2022/03/10/%E6%98%A0%E5%B0%84/index.html">
 <meta property="og:site_name" content="Caplist">
+<meta property="og:description" content="killall iot  杀死原有屏幕的程序 映射 Linux帧缓冲原理    在Linux驱动下面，有一块缓冲区(显存)，保存了每一个像素点的颜色值，缓冲区有多大？ 1800*480*4">
 <meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2022-03-10T01:12:20.000Z">
+<meta property="article:modified_time" content="2022-03-10T01:26:05.029Z">
+<meta property="article:tag" content="Linux">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternative" href="/atom.xml" title="Caplist" type="application/atom+xml">
@@ -173,36 +178,116 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
+            <article id="post-映射" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
   
+    <h1 class="article-title" itemprop="name">
+      映射
+    </h1>
   
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2022" class="archive-year">2022</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2022/03/10/%E6%98%A0%E5%B0%84/" class="archive-article-date">
+
+        
+        <a href="/2022/03/10/%E6%98%A0%E5%B0%84/" class="archive-article-date">
   	<time datetime="2022-03-10T01:12:20.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-03-10</time>
 </a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2022/03/10/%E6%98%A0%E5%B0%84/">映射</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
+        
+        <!-- 需要添加的位置 -->
+         <!-- 开始添加字数统计-->
+        
           
+
+<div style="margin-top:10px;">
+    <span class="post-time">
+      <span class="post-meta-item-icon">
+        
+       <i class="icon-statistics"></i>
+        <span class="post-meta-item-text">  字数统计: </span>
+        <span class="post-count">873字</span>
+      </span>
+    </span>
+
+    <span class="post-time">
+      &nbsp; | &nbsp;
+      <span class="post-meta-item-icon">
+         
+        <i class="icon-book icon"></i>
+        <span class="post-meta-item-text"> 阅读时长≈</span>
+        <span class="post-count">3分</span>
+      </span>
+    </span>
+</div>
+
+          
+          <!-- 添加完成 -->
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>killall iot  杀死原有屏幕的程序</p>
+<p>映射</p>
+<p>Linux帧缓冲原理<br>    在Linux驱动下面，有一块缓冲区(显存)，保存了每一个像素点的颜色值，缓冲区有多大？</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">800*480*4</span><br></pre></td></tr></tbody></table></figure>
+
+<span id="more"></span>        
+
+<p>帧缓冲驱动就会按照一定的刷新频率去缓冲区的颜色值显示到LCD屏<br>只需要去改变缓冲区的颜色值就可以了</p>
+<p>那么怎么去改变这个缓冲区的内容？</p>
+<p>既然缓冲区是一块地址，那么可以通过指针去指向这块内存，然后再去改变它的值<br>假设：<br>    int *plcd;//已经指向缓冲区的首地址，也就是第一个像素点的地址</p>
+<p>给屏幕的第一个像素点点一个红色<br>*plcd=0xff0000;</p>
+<p>给屏幕的第二个像素点点一个红色<br>    *(plcd+1)=0xff0000;</p>
+<p>(0,0)—————————————x<br>|<br>|<br>|<br>|<br>|<br>|                  (x0,y0)<br>|<br>|<br>y</p>
+<p>给屏幕任意一点(x0,y0)点一个红色<br>    <em>(plcd+x0+y0</em>800)=0xff0000;</p>
+<p>给全屏染红色</p>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span>(y=<span class="number">0</span>;y&lt;<span class="number">480</span>;y++)</span><br><span class="line">	<span class="keyword">for</span>(x=<span class="number">0</span>;x&lt;<span class="number">800</span>;x++)</span><br><span class="line">	{</span><br><span class="line">		Lcd_Draw_Point(x,y,<span class="number">0xff0000</span>);</span><br><span class="line">	}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>在任意位置画点的函数</p>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Lcd_Draw_Point</span><span class="params">(<span class="keyword">int</span> i,<span class="keyword">int</span> j,<span class="keyword">unsigned</span> <span class="keyword">int</span> color)</span></span></span><br><span class="line"><span class="function"></span>{</span><br><span class="line">	<span class="keyword">if</span>(i&gt;=<span class="number">0</span>&amp;&amp;i&lt;<span class="number">800</span>&amp;&amp;j&gt;=<span class="number">0</span>&amp;&amp;j&lt;<span class="number">480</span>)</span><br><span class="line">	{</span><br><span class="line">		*(plcd+i+j*<span class="number">800</span>)=color;	</span><br><span class="line">	}</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>目标是让plcd指向缓冲区的首地址?</p>
+<p>映射<br>mmap<br>NAME<br>       mmap, munmap - map or unmap files or devices into memory<br>        把文件或者设备映射或解映射到我们的内存，提高操作效率<br>SYNOPSIS<br>       #include &lt;sys/mman.h&gt;</p>
+<p>   void *mmap(void <em>addr, size_t length, int prot, int flags,<br>              int fd, off_t offset);<br>        void <em>addr：决定映射到哪一块内存<br>                    是一块空闲的内存？用户肯定不知道<br>                    我们只能填NULL，让系统自动分配<br>        size_t length：我们要映射的那个文件或者设备大小<br>                        800</em>480</em>4<br>        int prot：映射过来对内存的权限，一般是要和open权限一致<br>            PROT_EXEC:可执行<br>            PROT_READ：可读<br>            PROT_WRITE：可写<br>            可读可写可执行：PROT_EXEC|PROT_READ|PROT_WRITE     //注意 | 和  ||的区别<br>        int flags:映射之后的属性<br>            MAP_SHARED  共享映射<br>        int fd：文件描述符，你要映射的文件的文件描述符</p>
+<pre><code>    off_t offset :偏移量，填0，屏幕文件都要，不偏移
+</code></pre>
+<p>返回值：<br>    失败的话返回NULL<br>    成功的话返回映射之后的内存的首地址</p>
+<p>解映射：<br>   int munmap(void <em>addr, size_t length);<br>    void <em>addr：就是映射过来的那块地址  plcd<br>    size_t length:内存的大小 800</em>480</em>4</p>
+<p>练习：把屏幕染紫色<br>    程序实现的步骤：<br>    1.打开屏幕<br>    2.映射<br>    3.全屏染紫<br>    4.解映射<br>    5.关闭屏幕</p>
+<p>练习2：在屏幕的中心位置画圆，以(x0.y0)为圆心，以r为半径<br>        提示：两点之间的距离公式</p>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;sys/types.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;sys/stat.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;fcntl.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;sys/mman.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Lcd_Draw_Point</span><span class="params">(<span class="keyword">int</span> i,<span class="keyword">int</span> j,<span class="keyword">unsigned</span> <span class="keyword">int</span> color,<span class="keyword">int</span> *plcd)</span></span>;</span><br><span class="line"><span class="keyword">int</span> a,b,c;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>{</span><br><span class="line">    <span class="keyword">int</span> x,y,fd;</span><br><span class="line">    <span class="comment">// char buf[4]={0xff,0x00,0x00,0x00};</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">int</span> color=<span class="number">0xff00000</span>;</span><br><span class="line">    fd = open(<span class="string">"/dev/fb0"</span>,O_RDWR);</span><br><span class="line">    <span class="keyword">if</span>(<span class="number">-1</span>==fd)</span><br><span class="line">    {</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"Open failed!\n"</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    }</span><br><span class="line">    <span class="comment">// int *plcd;</span></span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">"%d%d%d"</span>,&amp;a,&amp;b,&amp;c);</span><br><span class="line">    <span class="keyword">int</span> *plcd = mmap(<span class="literal">NULL</span>,<span class="number">800</span>*<span class="number">480</span>*<span class="number">4</span>,PROT_EXEC|PROT_READ|PROT_WRITE,MAP_SHARED,fd,<span class="number">0</span>);</span><br><span class="line">    <span class="comment">// printf("%d",plcd);</span></span><br><span class="line">    <span class="keyword">for</span>(y=<span class="number">0</span>;y&lt;<span class="number">480</span>;y++)</span><br><span class="line">    {</span><br><span class="line">        <span class="keyword">for</span>(x=<span class="number">0</span>;x&lt;<span class="number">800</span>;x++)</span><br><span class="line">        {</span><br><span class="line">            <span class="comment">// ds = write(fd,&amp;color,4);//注意&amp;</span></span><br><span class="line">            <span class="comment">// *(plcd+i+j*800)=0xff0000;</span></span><br><span class="line">            Lcd_Draw_Point(x,y,color,plcd);</span><br><span class="line">            <span class="comment">// *(plcd+x+y*800) =color;</span></span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line">    <span class="comment">// munmap(plcd,800*480*4);</span></span><br><span class="line">    close(fd);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"Sucessed!!\n"</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Lcd_Draw_Point</span><span class="params">(<span class="keyword">int</span> i,<span class="keyword">int</span> j,<span class="keyword">unsigned</span> <span class="keyword">int</span> color,<span class="keyword">int</span> *plcd)</span></span></span><br><span class="line"><span class="function"></span>{</span><br><span class="line">	<span class="keyword">if</span>(i&gt;=<span class="number">0</span>&amp;&amp;i&lt;<span class="number">800</span>&amp;&amp;j&gt;=<span class="number">0</span>&amp;&amp;j&lt;<span class="number">480</span>)</span><br><span class="line">	{</span><br><span class="line">        <span class="keyword">if</span>((i-a)*(i-a)+(j-b)*(j-b)==c*c)</span><br><span class="line">		    *(plcd+i+j*<span class="number">800</span>)=color;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">        	*(plcd+i+j*<span class="number">800</span>)=<span class="number">0x000000</span>;</span><br><span class="line">	}</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>​<br>​<br>​<br>​<br>​<br>​<br>​<br>​<br>​    </p>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>老板，抽跟华子不<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -214,7 +299,7 @@
 		</ul>
 	</div>
 
-          
+      
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
 		<ul class="article-tag-list">
@@ -227,117 +312,104 @@
 	</div>
 
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://caplist.xyz/2022/03/10/%E6%98%A0%E5%B0%84/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2022/03/08/%E7%82%B9%E4%BA%AE%E5%B1%8F%E5%B9%95/" class="archive-article-date">
-  	<time datetime="2022-03-08T08:23:18.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-03-08</time>
-</a>
+<nav id="article-nav">
+  
+  
+    <a href="/2022/03/08/%E7%82%B9%E4%BA%AE%E5%B1%8F%E5%B9%95/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">点亮屏幕</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2022/03/08/%E7%82%B9%E4%BA%AE%E5%B1%8F%E5%B9%95/">点亮屏幕</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Linux</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/教程//" class="article-tag-list-link color3">教程</a>
-        		</li>
-      		
-		</ul>
-	</div>
+        
+        
+    </div>
+</aside>
 
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2022/03/07/Linux/" class="archive-article-date">
-  	<time datetime="2022-03-07T03:56:39.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-03-07</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2022/03/07/Linux/">Linux应用开发</a>
-    </h1>
-  
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Linux</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/教程//" class="article-tag-list-link color3">教程</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
   
   
-    </div></section>
   
 
-    
+  
 
+  
 
+  
 
 
           </div>
@@ -361,8 +433,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
